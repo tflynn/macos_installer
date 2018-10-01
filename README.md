@@ -48,6 +48,13 @@ Get the source code
 
   * `pip3 install .`
   
+Or:
+
+    ```
+    pip3 install git+https://github.com/tflynn/macos_installer.git@master#egg=macos_installer
+    ``` 
+   
+  
 ## Using this package
 
 ```
