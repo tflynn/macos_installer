@@ -50,10 +50,10 @@ Get the source code
   
 Or:
 
-    ```
-    pip3 install git+https://github.com/tflynn/macos_installer.git@master#egg=macos_installer
-    ``` 
-   
+```
+pip3 install git+https://github.com/tflynn/macos_installer.git@master#egg=macos_installer
+``` 
+  
   
 ## Using this package
 
