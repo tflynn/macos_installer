@@ -17,6 +17,7 @@ FAILING_PACKAGES_DATA="""
 
 PACKAGES_DATA="""
 [
+    {"full_name": "wget", "name": "wget", "package_type": "brew", "state" : "present" },
     {"full_name": "iTerm2 (3.2.1)", "name": "iterm2", "package_type": "brewcask", "state" : "present" },
     {"full_name": "Google Chrome", "name": "google-chrome", "package_type": "brewcask", "state" : "present" },
     {"full_name": "1Password 7", "name": "1Password 7", "package_type": "mas", "mas_id": "1333542190", "state" : "present" },
