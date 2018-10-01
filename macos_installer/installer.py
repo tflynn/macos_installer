@@ -10,7 +10,7 @@ logger = get_logger(application_name="macos_installer", console=True)
 
 from run_command import run_command
 
-from packages_data import PACKAGES_DATA
+from macos_installer.packages_data import PACKAGES_DATA
 
 
 class PackageInfo:
