@@ -10,7 +10,7 @@ logger = get_logger(application_name="macos_installer", console=True)
 
 from run_command import run_command
 
-from macos_installer.packages_data import PACKAGES_DATA
+from .packages_data import PACKAGES_DATA
 
 
 class PackageInfo:
@@ -236,12 +236,15 @@ class BrewInstaller(BaseInstaller):
             logger.info("BrewInstaller.install {0} is already installed".format(self.name))
             return False
         else:
-            run_command(cmd=["brew", "install", self.name])
+            results, errors = run_command(cmd=["brew", "install", self.name])
             if self.is_present:
                 logger.info("BrewInstaller.install {0} succeeded".format(self.name))
                 return True
             else:
-                logger.warning("BrewInstaller.install {0} failed".format(self.name))
+                if "Error" in results:
+                    logger.error("BrewInstaller.install {0} failed errors {1}".format(self.name, results))
+                else:
+                    logger.warning("BrewInstaller.install {0} failed".format(self.name))
                 return False
 
     def remove(self):
@@ -316,12 +319,15 @@ class BrewCaskInstaller(BaseInstaller):
             logger.info("BrewCaskInstaller.install {0} is already installed".format(self.name))
             return False
         else:
-            run_command(cmd=["brew", "cask", "install", self.name])
+            results, errors = run_command(cmd=["brew", "cask", "install", self.name])
             if self.is_present:
                 logger.info("BrewCaskInstaller.install {0} succeeded".format(self.name))
                 return True
             else:
-                logger.warning("BrewCaskInstaller.install {0} failed".format(self.name))
+                if "Error" in results:
+                    logger.error("BrewCaskInstaller.install {0} failed errors {1}".format(self.name, results))
+                else:
+                    logger.warning("BrewCaskInstaller.install {0} failed".format(self.name))
                 return False
 
     def remove(self):
@@ -573,5 +579,5 @@ def main(data=None):
     PackageManager.all_actions(data)
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
