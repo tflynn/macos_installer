@@ -32,7 +32,13 @@ PACKAGES_DATA="""
     {"full_name": "MacDown", "name": "macdown", "package_type": "brewcask", "state" : "present" },
     {"full_name": "monosnap", "name": "monosnap", "package_type": "mas", "mas_id": "540348655", "state" : "present" },           
     {"full_name": "Photo Meta Edit", "name": "Photo Meta Edit", "package_type": "mas", "mas_id": "553760117", "state" : "present" },
-    {"full_name": "Gemini 2", "name": "gemini", "package_type": "brewcask", "state" : "present" }    
+    {"full_name": "Gemini 2", "name": "gemini", "package_type": "brewcask", "state" : "present" },
+    {"full_name": "Sourcetree (2.7.6)", "name": "sourcetree", "package_type": "brewcask", "state" : "present"},
+    {"full_name": "Intellij IDEA (2018.2.4)", "name": "intellij-idea", "package_type": "brewcask", "state" : "present"},
+    {"full_name": "RubyMine (2018.2.3)", "name": "rubymine", "package_type": "brewcask", "state" : "present"},
+    {"full_name": "PyCharm (2018.2.4)", "name": "pycharm", "package_type": "brewcask", "state" : "present"},
+    {"full_name": "Vagrant (2.1.5)", "name": "vagrant", "package_type": "brewcask", "state" : "present"},
+    {"full_name": "Virtualbox (5.2.18)", "name": "virtualbox", "package_type": "brewcask", "state" : "present"}
 ]
 """.strip()
 
