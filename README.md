@@ -4,6 +4,10 @@ Installs various package formats in macOS.
 
 ## Requirements
 
+* Install as user with admin privileges
+
+  Accept any requests to login or allow installation of system extensions
+
 * Homebrew and Homebrew Cask
 
   From [here](https://brew.sh/)
@@ -20,8 +24,11 @@ Installs various package formats in macOS.
        
 * mas (Mac Appstore command-line interface)
 
+    You will need to log into the Apple Store manually first.
+
     ```
     brew install mas
+    mas list
     ```
 
 * Python3
