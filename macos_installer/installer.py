@@ -236,6 +236,7 @@ class BrewInstaller(BaseInstaller):
             logger.info("BrewInstaller.install {0} is already installed".format(self.name))
             return False
         else:
+            logger.info("BrewInstaller.installing {0}".format(self.name))
             results, errors = run_command(cmd=["brew", "install", self.name])
             if self.is_present:
                 logger.info("BrewInstaller.install {0} succeeded".format(self.name))
@@ -319,6 +320,7 @@ class BrewCaskInstaller(BaseInstaller):
             logger.info("BrewCaskInstaller.install {0} is already installed".format(self.name))
             return False
         else:
+            logger.info("BrewCaskInstaller.installing {0}".format(self.name))
             results, errors = run_command(cmd=["brew", "cask", "install", self.name])
             if self.is_present:
                 logger.info("BrewCaskInstaller.install {0} succeeded".format(self.name))
@@ -407,6 +409,7 @@ class MASInstaller(BaseInstaller):
             logger.info("MASInstaller.install {0} is already installed".format(self.name))
             return False
         else:
+            logger.info("MASInstaller.installing {0}".format(self.name))
             run_command(cmd=["mas", "install", self.mas_id])
             if self.is_present:
                 logger.info("MASInstaller.install {0} succeeded".format(self.name))
@@ -418,6 +421,7 @@ class MASInstaller(BaseInstaller):
     def remove(self):
         """
         Remove a MAS package
+
 
         Returns:
             True if removal succeeded
