@@ -410,7 +410,10 @@ class MASInstaller(BaseInstaller):
             return False
         else:
             logger.info("MASInstaller.installing {0}".format(self.name))
-            run_command(cmd=["mas", "install", self.mas_id])
+            results, errors = run_command(cmd=["mas", "install", self.mas_id])
+            if "Error:"in results or "Warning:" in results:
+                logger.error("MASInstaller.install {0} failed {1}".format(self.name, results))
+                return False
             if self.is_present:
                 logger.info("MASInstaller.install {0} succeeded".format(self.name))
                 return True
@@ -432,8 +435,9 @@ class MASInstaller(BaseInstaller):
         if self.is_present():
             app_name = "/Applications/{0}.app".format(self.name)
             results, errors = run_command(cmd=["sudo","rm", "-rf", app_name])
-            # logger.info("MASInstaller.remove results {0}".format(results))
-            # logger.info("MASInstaller.remove errors {0}".format(errors))
+            if "Error:"in results or "Warning:" in results:
+                logger.error("MASInstaller.remove {0} failed {1}".format(self.name, results))
+                return False
             if self.is_present():
                 logger.warning("MASInstaller.remove {0} removal failed".format(self.name))
                 return False
@@ -444,7 +448,6 @@ class MASInstaller(BaseInstaller):
                 results, errors = run_command(cmd=["sudo", "rm", "-rf", trash_dir])
                 # logger.info("MASInstaller.remove clear trash results {0}".format(results))
                 # logger.info("MASInstaller.remove clear trash errors {0}".format(errors))
-
                 return True
         else:
             logger.info("MASInstaller.remove {0} is not installed".format(self.name))
