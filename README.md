@@ -2,6 +2,8 @@
 
 Installs various package formats in macOS.
 
+    macOS Mojave note: Automated installs from the Apple Store fail.
+
 ## Requirements
 
 * Install as user with admin privileges
