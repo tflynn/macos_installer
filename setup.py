@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='macos_installer',
-      version='0.5',
+      version='0.6',
       description='macOS installer for any type of macOS packages',
       url='https://github.com/tflynn/macos_installer.git',
       author='Tracy Flynn',
@@ -12,4 +12,3 @@ setup(name='macos_installer',
       test_suite='nose.collector',
       tests_require=['nose'],
       zip_safe=False)
-
