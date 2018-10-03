@@ -2,7 +2,7 @@
 
 Installs various package formats in macOS.
 
-    macOS Mojave note: Automated installs from the Apple Store fail.
+macOS Mojave note: Automated installs from the Apple Store fail.
 
 ## Requirements
 
