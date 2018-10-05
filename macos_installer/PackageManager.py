@@ -1,9 +1,13 @@
+import os
 from .packages_data import PACKAGES_DATA
 from .PackageInfo import PackageInfo
 
 from .installers.BrewInstaller import BrewInstaller
 from .installers.BrewCaskInstaller import BrewCaskInstaller
 from .installers.MASInstaller import MASInstaller
+from .installers.BrewCaskLocalInstaller import BrewCaskLocalInstaller
+
+PERSONAL_BOOTSTRAP="{0}/.bootstrap_personal".format(os.environ['HOME'])
 
 
 class PackageManager():
@@ -58,6 +62,11 @@ class PackageManager():
             elif package_info.package_type == 'mas':
                 installer = MASInstaller(logger=logger, package_info=package_info)
                 cls.installers.append(installer)
+            elif package_info.package_type == 'brewcasklocal':
+                # Skip unless personal system
+                if os.path.exists(PERSONAL_BOOTSTRAP):
+                    installer = BrewCaskLocalInstaller(logger=logger, package_info=package_info)
+                    cls.installers.append(installer)
             else:
                 pass
 

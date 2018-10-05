@@ -84,8 +84,12 @@ class PackageInfo:
         if self.package_type == 'brew':
             return True if self.name else False
 
-        # Homebrew Cash
+        # Homebrew Cask
         if self.package_type == 'brewcask':
+            return True if self.name else False
+
+        # Homebrew Local Cask
+        if self.package_type == 'brewcasklocal':
             return True if self.name else False
 
         # package_type: zip, pkg, dmg or ? requires package_url

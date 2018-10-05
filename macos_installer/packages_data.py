@@ -22,8 +22,8 @@ PACKAGES_DATA="""
     {"full_name": "Google Chrome", "name": "google-chrome", "package_type": "brewcask", "state" : "present" },
     {"full_name": "1Password 7", "name": "1Password 7", "package_type": "mas", "mas_id": "1333542190", "state" : "present" },
     {"full_name": "Airmail 3 (3.6.41)", "name": "Airmail 3", "package_type": "mas", "mas_id": "918858936", "state" : "present" },
-    {"full_name": "Contacts for Google", "name": "Contacts for Google", "package_type": "mas", "mas_id": "1127748291", "state" : "present" },
-    {"full_name": "GCal for Google Calendar", "name": "GCal for Google Calendar", "package_type": "mas", "mas_id": "1107163858", "state" : "present" },
+    {"full_name": "FullContact", "name": "FullContact", "package_type": "mas", "mas_id": "1094748271", "state" : "present" },
+    {"full_name": "fantatical 2", "name": "fantastical", "package_type": "brewcask", "state" : "present" },
     {"full_name": "Simplenote (1.3.7)", "name": "simplenote", "package_type": "brewcask", "state" : "present" },
     {"full_name": "Sublime Text", "name": "sublime-text", "package_type": "brewcask", "state" : "present" },
     {"full_name": "Vox", "name": "vox", "package_type": "brewcask", "state" : "present" },
@@ -39,7 +39,14 @@ PACKAGES_DATA="""
     {"full_name": "RubyMine (2018.2.3)", "name": "rubymine", "package_type": "brewcask", "state" : "present"},
     {"full_name": "PyCharm (2018.2.4)", "name": "pycharm", "package_type": "brewcask", "state" : "present"},
     {"full_name": "Vagrant (2.1.5)", "name": "vagrant", "package_type": "brewcask", "state" : "present"},
-    {"full_name": "Virtualbox (5.2.18)", "name": "virtualbox", "package_type": "brewcask", "state" : "present"}
+    {"full_name": "Virtualbox (5.2.18)", "name": "virtualbox", "package_type": "brewcask", "state" : "present"},
+    {"full_name": "Airmail 3 (3.6.41)", "name": "airmail", "package_type": "brewcasklocal", "state" : "present" },
+    {"full_name": "FullContact (18.07.3)", "name": "fullcontact", "package_type": "brewcasklocal", "state" : "present" },
+    {"full_name": "Notes for Google Keep", "name": "notesforgooglekeep", "package_type": "brewcasklocal", "state" : "present" },
+    {"full_name": "Monosnap (3.5.1)", "name": "monosnap", "package_type": "brewcasklocal", "state" : "present" },
+    {"full_name": "dBPowerAmp (16.3.1)", "name": "dbpoweramp", "package_type": "brewcasklocal", "state" : "present" },
+    {"full_name": "Photo Meta Edit", "name": "photometaedit", "package_type": "brewcasklocal" , "state" : "present" },
+    {"full_name": "Picktorial (3.0.6)", "name": "picktorial", "package_type": "brewcasklocal" , "state" : "present" }
 ]
 """.strip()
 
