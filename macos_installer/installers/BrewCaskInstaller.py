@@ -23,8 +23,11 @@ class BrewCaskInstaller(BaseInstaller):
 
         Returns:
             bool:
+
             True if installation occurred.
+            
             False if package already installed or installation failed
+            
         """
 
         if self.is_present():

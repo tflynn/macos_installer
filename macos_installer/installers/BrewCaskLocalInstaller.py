@@ -35,8 +35,10 @@ class BrewCaskLocalInstaller(BaseInstaller):
         Ensure that the repo contain the local cask definitions is present
 
         Returns:
-            None
+            No return
+            
             Will exit if an error occurs during repo cloning.
+
         """
         if not path.exists(LOCAL_CASK_REPO_DIR):
             # Switch to appropriate directory
@@ -50,13 +52,17 @@ class BrewCaskLocalInstaller(BaseInstaller):
                 self.logger.error("BrewCaskLocalInstaller error cloning cask definitions repo")
                 sys.exit(1)
 
+        return
+
     def get_cask_info(self):
         """
         Extract some information from the cask definition
 
         Returns:
-            tuple(str):
-            (cask name, directory containing cask, qualified cask name, application name)
+            tuple(str): 
+
+            cask name, directory containing cask, qualified cask name, application name
+            
             Will exit if application name cannot be determined
 
         """
@@ -89,8 +95,11 @@ class BrewCaskLocalInstaller(BaseInstaller):
 
         Returns:
             bool:
+
             True: If no zip or no errors during unzip processing
+
             False: If any errors during unzip processing
+
         """
         tmp_dir = os.environ['MY_TEMP']
 
@@ -117,8 +126,11 @@ class BrewCaskLocalInstaller(BaseInstaller):
 
         Returns:
             bool:
+
             True if installation occurred.
+
             False if package already installed or installation failed
+
         """
         self.ensure_local_cask_repo_present()
 
@@ -155,8 +167,11 @@ class BrewCaskLocalInstaller(BaseInstaller):
 
         Returns:
             bool:
+
             True if removal succeeded
+
             False if package not installed or removal failed.
+
         """
         self.ensure_local_cask_repo_present()
 
@@ -182,8 +197,11 @@ class BrewCaskLocalInstaller(BaseInstaller):
 
         Returns:
             bool:
+
             True if installed
+
             False Otherwise
+            
         """
         # Check to see whether the app is present (and therefore installed) in /Applications
         local_cask_name, local_cask_dir, local_cask_qname_file, app_name = self.get_cask_info()

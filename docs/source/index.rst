@@ -10,6 +10,7 @@ Welcome to macOS installer's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   readme_link
    macos_installer
    macos_installer_installers
 

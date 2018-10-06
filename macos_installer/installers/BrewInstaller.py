@@ -23,8 +23,11 @@ class BrewInstaller(BaseInstaller):
 
         Returns:
             bool:
+
             True if installation occurred.
+
             False if package already installed or installation failed
+
         """
 
         if self.is_present():
@@ -50,8 +53,11 @@ class BrewInstaller(BaseInstaller):
 
         Returns:
             bool:
+
             True if removal succeeded
+
             False if package not installed or removal failed.
+
         """
         if self.is_present():
             run_command(cmd=["brew", "uninstall", self.package_info.name])
@@ -71,8 +77,11 @@ class BrewInstaller(BaseInstaller):
 
         Returns:
             bool:
+
             True if installed
+
             False Otherwise
+            
         """
 
         results, ignore = run_command(cmd=["brew","list"])

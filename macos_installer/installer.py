@@ -8,9 +8,12 @@ def main(data=None, logger=None):
     """
     Standalone entry point for installation package
 
-    :param data: list(dict): Data structure. See package_data.py or README for examples.
-    :param logger: logger instance
-    :return: No return
+    Args:
+        data (list(dict)): Data structure. See package_data.py or README for examples.
+        logger (obj): logger instance
+    
+    Returns:
+        Nothing returned
     """
 
     logger_instance = get_logger(application_name="macos_installer", console=True)

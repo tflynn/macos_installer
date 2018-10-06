@@ -121,8 +121,11 @@ class PackageInfo:
 
         Returns:
             list(obj):
+            
             Success: list of populated PackageInfo instances
+            
             Failure: None
+
         """
 
         packages_info = []
