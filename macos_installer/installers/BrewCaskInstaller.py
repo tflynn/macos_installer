@@ -22,6 +22,7 @@ class BrewCaskInstaller(BaseInstaller):
         Install a Homebrew Cask package
 
         Returns:
+            bool:
             True if installation occurred.
             False if package already installed or installation failed
         """
@@ -48,6 +49,7 @@ class BrewCaskInstaller(BaseInstaller):
         Remove a Homebrew Cask package
 
         Returns:
+            bool:
             True if removal succeeded
             False if package not installed or removal failed.
         """
@@ -68,6 +70,7 @@ class BrewCaskInstaller(BaseInstaller):
         Is package present
 
         Returns:
+            bool:
             True if installed
             False Otherwise
         """

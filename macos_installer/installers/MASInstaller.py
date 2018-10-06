@@ -23,6 +23,7 @@ class MASInstaller(BaseInstaller):
         Install a MAS package
 
         Returns:
+            bool:
             True if installation occurred.
             False if package already installed or installation failed
         """
@@ -49,6 +50,7 @@ class MASInstaller(BaseInstaller):
 
 
         Returns:
+            bool:
             True if removal succeeded
             False if package not installed or removal failed.
         """
@@ -81,6 +83,7 @@ class MASInstaller(BaseInstaller):
         Is package present
 
         Returns:
+            bool:
             True if installed
             False Otherwise
         """

@@ -1,5 +1,5 @@
 class BaseInstaller:
-    """ Base class for all *Installer types"""
+    """ Base class for all \*Installer types"""
 
     def __init__(self,
                  logger=None,

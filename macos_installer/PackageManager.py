@@ -22,10 +22,11 @@ class PackageManager():
         Load all packages defined in the data
 
         Args:
-            data list(dict): Data structure. See package_data.py or README for examples.
+            data list(dict): Data structure. See package\_data.py or README for examples.
 
         Returns:
-             list(obj): A list of populated PackageInfo instances
+             list(obj): 
+             A list of populated PackageInfo instances
         """
 
         packages_data = data if data else PACKAGES_DATA
@@ -41,7 +42,8 @@ class PackageManager():
             packages_info list(obj): A list of PackageInfo instances
 
         Returns:
-            list(obj) List of configured *Installer instances
+            list(obj):
+            List of configured \*Installer instances
         """
 
         if not packages_info:
@@ -78,7 +80,7 @@ class PackageManager():
         Run all the installer instances
 
         Args:
-            installers list(obj):  List of configured *Installer instances
+            installers list(obj):  List of configured \*Installer instances
 
         Returns:
             No return value

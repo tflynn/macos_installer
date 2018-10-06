@@ -39,10 +39,10 @@ class PackageInfo:
 
         Args:
             name (str): Field name
-            value (obj: Field value (usually a string)
+            value (obj): Field value (usually a string)
 
         Returns:
-            Ne return value
+            No return value
 
         """
         self.__dict__[name] = value
@@ -69,7 +69,7 @@ class PackageInfo:
         Are the settings for this instance valid and consistent?
 
         Returns:
-            True if valid, False otherwise
+            bool: True if valid, False otherwise
         """
 
         # Mac Apple Store (mas) packages
@@ -103,9 +103,8 @@ class PackageInfo:
             data (dict): Data structure. See package_data.py or README for examples.
 
         Returns:
-            True if loaded object is valid, False otherwise
+            bool: True if loaded object is valid, False otherwise
         """
-
         for field_name in self.__dict__.keys():
             if field_name in data:
                 self.__dict__[field_name] = data[field_name]
@@ -121,7 +120,8 @@ class PackageInfo:
             data (dict): Data structure. See package_data.py or README for examples.
 
         Returns:
-            Success list(obj): A list of populated PackageInfo instances
+            list(obj):
+            Success: list of populated PackageInfo instances
             Failure: None
         """
 
@@ -151,6 +151,7 @@ class PackageInfo:
         Get a list of all populated instances
 
         Returns:
-            list(obj): A list of populated PackageInfo instances
+            list(obj):
+            A list of populated PackageInfo instances
         """
         return cls.all_instances

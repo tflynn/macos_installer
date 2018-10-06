@@ -22,6 +22,7 @@ class BrewInstaller(BaseInstaller):
         Install a Homebrew package
 
         Returns:
+            bool:
             True if installation occurred.
             False if package already installed or installation failed
         """
@@ -48,6 +49,7 @@ class BrewInstaller(BaseInstaller):
         Remove a Homebrew package
 
         Returns:
+            bool:
             True if removal succeeded
             False if package not installed or removal failed.
         """
@@ -68,6 +70,7 @@ class BrewInstaller(BaseInstaller):
         Is package present
 
         Returns:
+            bool:
             True if installed
             False Otherwise
         """

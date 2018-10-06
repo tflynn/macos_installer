@@ -55,7 +55,8 @@ class BrewCaskLocalInstaller(BaseInstaller):
         Extract some information from the cask definition
 
         Returns:
-            Tuple(str)(cask name, directory containing cask, qualified cask name, application name)
+            tuple(str):
+            (cask name, directory containing cask, qualified cask name, application name)
             Will exit if application name cannot be determined
 
         """
@@ -87,6 +88,7 @@ class BrewCaskLocalInstaller(BaseInstaller):
             app_name: Name of app to search for receipts zip
 
         Returns:
+            bool:
             True: If no zip or no errors during unzip processing
             False: If any errors during unzip processing
         """
@@ -114,6 +116,7 @@ class BrewCaskLocalInstaller(BaseInstaller):
         Install a Homebrew CaskLocal package
 
         Returns:
+            bool:
             True if installation occurred.
             False if package already installed or installation failed
         """
@@ -151,6 +154,7 @@ class BrewCaskLocalInstaller(BaseInstaller):
         Remove a Homebrew CaskLocal package
 
         Returns:
+            bool:
             True if removal succeeded
             False if package not installed or removal failed.
         """
@@ -177,6 +181,7 @@ class BrewCaskLocalInstaller(BaseInstaller):
         Is package present
 
         Returns:
+            bool:
             True if installed
             False Otherwise
         """
