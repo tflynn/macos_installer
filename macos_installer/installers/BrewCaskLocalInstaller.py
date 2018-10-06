@@ -46,7 +46,7 @@ class BrewCaskLocalInstaller(BaseInstaller):
             os.chdir(STARTUP_DIR)
             # git clone git@github.com:tflynn/private_casks.git
             cmd = ['git', 'clone', LOCAL_CASK_REPO_URL]
-            results, errors = run_command(cmd=cmd)
+            results, errors, status = run_command(cmd=cmd)
             os.chdir(start_dir)
             if re.search('error', results, re.IGNORECASE) or errors:
                 self.logger.error("BrewCaskLocalInstaller error cloning cask definitions repo")
@@ -110,7 +110,7 @@ class BrewCaskLocalInstaller(BaseInstaller):
             full_target_dir = '/private/var/db/receipts'
             # "sudo unzip <zip file name> -d dir"
             cmd = ['sudo', 'unzip', receipts_zip_file, '-d', full_target_dir]
-            results, errors = run_command(cmd=cmd)
+            results, errors, status = run_command(cmd=cmd)
             if re.search('error', results, re.IGNORECASE) or errors:
                 if results:
                     self.logger.info("unzip receipts results {0}".format(results))
@@ -144,7 +144,7 @@ class BrewCaskLocalInstaller(BaseInstaller):
 
             start_dir = os.getcwd()
             os.chdir(local_cask_dir)
-            results, errors = run_command(cmd=["brew", "cask", "install", local_cask_name])
+            results, errors, status = run_command(cmd=["brew", "cask", "install", local_cask_name])
             os.chdir(start_dir)
 
             if re.search('error', results, re.IGNORECASE) or errors:
@@ -176,7 +176,7 @@ class BrewCaskLocalInstaller(BaseInstaller):
         self.ensure_local_cask_repo_present()
 
         if self.is_present():
-            results, errors = run_command(cmd=["brew", "cask", "uninstall", self.package_info.name])
+            results, errors, status = run_command(cmd=["brew", "cask", "uninstall", self.package_info.name])
             if re.search('error', results, re.IGNORECASE) or errors:
                 self.logger.error("BrewCaskLocalInstaller.remove {0} failed {1} errors {2}".format(
                     self.package_info.name, results, errors))

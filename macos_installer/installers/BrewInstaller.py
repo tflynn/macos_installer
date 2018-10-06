@@ -35,7 +35,7 @@ class BrewInstaller(BaseInstaller):
             return False
         else:
             self.logger.info("BrewInstaller.installing {0}".format(self.package_info.name))
-            results, errors = run_command(cmd=["brew", "install", self.package_info.name])
+            results, errors, status = run_command(cmd=["brew", "install", self.package_info.name])
             if self.is_present:
                 self.logger.info("BrewInstaller.install {0} succeeded".format(self.package_info.name))
                 return True
@@ -84,7 +84,7 @@ class BrewInstaller(BaseInstaller):
             
         """
 
-        results, ignore = run_command(cmd=["brew","list"])
+        results, errors, status = run_command(cmd=["brew","list"])
         results = results.split("\n")
         if self.name in results:
             return True

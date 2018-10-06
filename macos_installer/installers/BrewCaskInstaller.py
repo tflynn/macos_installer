@@ -35,7 +35,7 @@ class BrewCaskInstaller(BaseInstaller):
             return False
         else:
             self.logger.info("BrewCaskInstaller.installing {0}".format(self.package_info.name))
-            results, errors = run_command(cmd=["brew", "cask", "install", self.package_info.name])
+            results, errors, status = run_command(cmd=["brew", "cask", "install", self.package_info.name])
             if self.is_present:
                 self.logger.info("BrewCaskInstaller.install {0} succeeded".format(self.package_info.name))
                 return True
@@ -78,7 +78,7 @@ class BrewCaskInstaller(BaseInstaller):
             False Otherwise
         """
 
-        results, ignore = run_command(cmd=["brew", "cask", "list"])
+        results, errors, status = run_command(cmd=["brew", "cask", "list"])
         results = results.split("\n")
         if self.package_info.name in results:
             return True

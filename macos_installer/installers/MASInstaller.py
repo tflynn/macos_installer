@@ -36,7 +36,7 @@ class MASInstaller(BaseInstaller):
             return False
         else:
             self.logger.info("MASInstaller.installing {0}".format(self.package_info.name))
-            results, errors = run_command(cmd=["mas", "install", self.package_info.mas_id])
+            results, errors, status = run_command(cmd=["mas", "install", self.package_info.mas_id])
             if "Error:"in results or "Warning:" in results:
                 self.logger.error("MASInstaller.install {0} failed {1}".format(self.package_info.name, results))
                 return False
@@ -64,7 +64,7 @@ class MASInstaller(BaseInstaller):
         self.logger.warning("MASInstaller.remove ia experimental. Use at your own risk")
         if self.is_present():
             app_name = "/Applications/{0}.app".format(self.package_info.name)
-            results, errors = run_command(cmd=["sudo","rm", "-rf", app_name])
+            results, errors, status = run_command(cmd=["sudo","rm", "-rf", app_name])
             if "Error:"in results or "Warning:" in results:
                 self.logger.error("MASInstaller.remove {0} failed {1}".format(self.package_info.name, results))
                 return False
@@ -76,7 +76,7 @@ class MASInstaller(BaseInstaller):
 
                 trash_dir = "{0}/.Trash/*".format(os.environ['HOME'])
                 run_command(cmd=["sudo", "rm", "-rf", trash_dir])
-                #results, errors = run_command(cmd=["sudo", "rm", "-rf", trash_dir])
+                #results, errors, status = run_command(cmd=["sudo", "rm", "-rf", trash_dir])
                 # logger.info("MASInstaller.remove clear trash results {0}".format(results))
                 # logger.info("MASInstaller.remove clear trash errors {0}".format(errors))
                 return True
@@ -97,7 +97,7 @@ class MASInstaller(BaseInstaller):
             
         """
 
-        results, ignore = run_command(cmd=["mas","list"])
+        results, errors, status = run_command(cmd=["mas","list"])
         results = results.split("\n")
         results = [result.split(" ")[0] for result in results]
         if self.package_info.mas_id in results:
