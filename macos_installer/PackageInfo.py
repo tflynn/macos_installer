@@ -32,6 +32,7 @@ class PackageInfo:
         self.package_type = package_type
         self.mas_id = mas_id
         self.state = state if state else "present"
+        self.force = "false"
 
     def set_field(self, name, value):
         """

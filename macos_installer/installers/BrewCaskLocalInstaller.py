@@ -134,7 +134,7 @@ class BrewCaskLocalInstaller(BaseInstaller):
         """
         self.ensure_local_cask_repo_present()
 
-        if self.is_present():
+        if self.is_present() and self.package_info.force == "false":
             self.logger.info("BrewCaskLocalInstaller.install {0} is already installed".format(self.package_info.name))
             return False
         else:
@@ -144,7 +144,8 @@ class BrewCaskLocalInstaller(BaseInstaller):
 
             start_dir = os.getcwd()
             os.chdir(local_cask_dir)
-            results, errors, status = run_command(cmd=["brew", "cask", "install", local_cask_name])
+            brew_command = "install" if self.package_info.force == "false" else "reinstall"
+            results, errors, status = run_command(cmd=["brew", "cask", brew_command, local_cask_name])
             os.chdir(start_dir)
 
             if re.search('error', results, re.IGNORECASE) or errors:
