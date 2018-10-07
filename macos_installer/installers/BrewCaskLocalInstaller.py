@@ -48,8 +48,9 @@ class BrewCaskLocalInstaller(BaseInstaller):
             cmd = ['git', 'clone', LOCAL_CASK_REPO_URL]
             results, errors, status = run_command(cmd=cmd)
             os.chdir(start_dir)
-            if re.search('error', results, re.IGNORECASE) or errors:
-                self.logger.error("BrewCaskLocalInstaller error cloning cask definitions repo")
+            if int(status) != 0:
+                self.logger.error("BrewCaskLocalInstaller error cloning cask definitions repo results {0} errors {1}".format(
+                                    results, errors))
                 sys.exit(1)
 
         return
