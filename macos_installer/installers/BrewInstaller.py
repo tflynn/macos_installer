@@ -35,16 +35,18 @@ class BrewInstaller(BaseInstaller):
             return False
         else:
             self.logger.info("BrewInstaller.installing {0}".format(self.package_info.name))
-            results, errors, status = run_command(cmd=["brew", "install", self.package_info.name])
-            if self.is_present:
-                self.logger.info("BrewInstaller.install {0} succeeded".format(self.package_info.name))
-                return True
-            else:
-                if "Error" in results:
-                    self.logger.error("BrewInstaller.install {0} failed errors {1}".format(
-                        self.package_info.name, results))
+            cmd = ["brew", "install", self.package_info.name]
+            results = run_command(cmd=cmd, logger=self.logger)
+            if results.success:
+                if self.is_present:
+                    self.logger.info("BrewInstaller.install {0} succeeded".format(self.package_info.name))
+                    return True
                 else:
                     self.logger.warning("BrewInstaller.install {0} failed".format(self.package_info.name))
+                    return False
+            else:
+                self.logger.error("BrewInstaller.install {0} failed status {1} results (2) errors {3}".format(
+                    self.package_info.name, results.status_code, results.results, results.errors))
                 return False
 
     def remove(self):
@@ -60,13 +62,19 @@ class BrewInstaller(BaseInstaller):
 
         """
         if self.is_present():
-            run_command(cmd=["brew", "uninstall", self.package_info.name])
-            if self.is_present():
-                self.logger.warning("BrewInstaller.remove {0} removal failed".format(self.package_info.name))
-                return False
+            cmd = ["brew", "uninstall", self.package_info.name]
+            results = run_command(cmd=cmd, logger=self.logger)
+            if results.success:
+                if self.is_present():
+                    self.logger.warning("BrewInstaller.remove {0} removal failed".format(self.package_info.name))
+                    return False
+                else:
+                    self.logger.info("BrewInstaller.remove {0} removal succeeded".format(self.package_info.name))
+                    return True
             else:
-                self.logger.info("BrewInstaller.remove {0} removal succeeded".format(self.package_info.name))
-                return True
+                self.logger.error("BrewInstaller.remove {0} failed status {1} results {2} errors {3}".format(
+                    self.package_info.name, results.status_code, results.results, results.errors))
+                return False
         else:
             self.logger.info("BrewInstaller.remove {0} is not installed".format(self.package_info.name))
             return False
@@ -83,10 +91,13 @@ class BrewInstaller(BaseInstaller):
             False Otherwise
             
         """
-
-        results, errors, status = run_command(cmd=["brew","list"])
-        results = results.split("\n")
-        if self.name in results:
-            return True
+        cmd = ["brew", "list"]
+        results = run_command(cmd=cmd, logger=self.logger)
+        if results.success:
+            results = results.results.split("\n")
+            if self.name in results:
+                return True
+            else:
+                return False
         else:
             return False

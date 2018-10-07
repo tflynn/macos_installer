@@ -16,11 +16,11 @@ def main(data=None, logger=None):
         Nothing returned
     """
 
-    logger_instance = get_logger(application_name="macos_installer", console=True)
     if not logger:
-        logger = logger_instance
+        logger = get_logger(application_name="macos_installer", console=True)
     PackageManager.all_actions(data=data, logger=logger)
     return
+
 
 if __name__ == "__main__":
     main()

@@ -36,15 +36,14 @@ class MASInstaller(BaseInstaller):
             return False
         else:
             self.logger.info("MASInstaller.installing {0}".format(self.package_info.name))
-            results, errors, status = run_command(cmd=["mas", "install", self.package_info.mas_id])
-            if "Error:"in results or "Warning:" in results:
-                self.logger.error("MASInstaller.install {0} failed {1}".format(self.package_info.name, results))
-                return False
-            if self.is_present:
+            cmd = ["mas", "install", self.package_info.mas_id]
+            results = run_command(cmd=cmd, logger=self.logger)
+            if results.success:
                 self.logger.info("MASInstaller.install {0} succeeded".format(self.package_info.name))
                 return True
             else:
-                self.logger.warning("MASInstaller.install {0} failed".format(self.package_info.name))
+                self.logger.error("MASInstaller.install {0} failed status {1} results {2} errors {3}".format(
+                    self.package_info.name, results.status_code, results.results, results.errors))
                 return False
 
     def remove(self):
@@ -64,22 +63,23 @@ class MASInstaller(BaseInstaller):
         self.logger.warning("MASInstaller.remove ia experimental. Use at your own risk")
         if self.is_present():
             app_name = "/Applications/{0}.app".format(self.package_info.name)
-            results, errors, status = run_command(cmd=["sudo","rm", "-rf", app_name])
-            if "Error:"in results or "Warning:" in results:
-                self.logger.error("MASInstaller.remove {0} failed {1}".format(self.package_info.name, results))
-                return False
-            if self.is_present():
-                self.logger.warning("MASInstaller.remove {0} removal failed".format(self.package_info.name))
-                return False
+            cmd = ["sudo", "rm", "-rf", app_name]
+            results = run_command(cmd=cmd, logger=self.logger)
+            if results.success:
+                if self.is_present():
+                    self.logger.warning("MASInstaller.remove {0} removal failed".format(self.package_info.name))
+                    return False
+                else:
+                    self.logger.info("MASInstaller.remove {0} removal succeeded".format(self.package_info.name))
+                    trash_dir = "{0}/.Trash/*".format(os.environ['HOME'])
+                    cmd = ["sudo", "rm", "-rf", trash_dir]
+                    run_command(cmd=cmd, logger=self.logger)
+                    # Ignore errors
+                    return True
             else:
-                self.logger.info("MASInstaller.remove {0} removal succeeded".format(self.package_info.name))
-
-                trash_dir = "{0}/.Trash/*".format(os.environ['HOME'])
-                run_command(cmd=["sudo", "rm", "-rf", trash_dir])
-                #results, errors, status = run_command(cmd=["sudo", "rm", "-rf", trash_dir])
-                # logger.info("MASInstaller.remove clear trash results {0}".format(results))
-                # logger.info("MASInstaller.remove clear trash errors {0}".format(errors))
-                return True
+                self.logger.error("MASInstaller.remove {0} failed status {1} results {2} errors {3}".format(
+                    self.package_info.name, results.status_code, results.results, results.errors))
+                return False
         else:
             self.logger.info("MASInstaller.remove {0} is not installed".format(self.package_info.name))
             return False
@@ -96,11 +96,14 @@ class MASInstaller(BaseInstaller):
             False Otherwise
             
         """
-
-        results, errors, status = run_command(cmd=["mas","list"])
-        results = results.split("\n")
-        results = [result.split(" ")[0] for result in results]
-        if self.package_info.mas_id in results:
-            return True
+        cmd = ["mas", "list"]
+        results = run_command(cmd=cmd, logger=self.logger)
+        if results.success:
+            results = results.results.split("\n")
+            results = [result.split(" ")[0] for result in results]
+            if self.package_info.mas_id in results:
+                return True
+            else:
+                return False
         else:
             return False

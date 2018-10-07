@@ -35,16 +35,18 @@ class BrewCaskInstaller(BaseInstaller):
             return False
         else:
             self.logger.info("BrewCaskInstaller.installing {0}".format(self.package_info.name))
-            results, errors, status = run_command(cmd=["brew", "cask", "install", self.package_info.name])
-            if self.is_present:
-                self.logger.info("BrewCaskInstaller.install {0} succeeded".format(self.package_info.name))
-                return True
-            else:
-                if "Error" in results:
-                    self.logger.error("BrewCaskInstaller.install {0} failed errors {1}".format(
-                        self.package_info.name, results))
+            cmd = ["brew", "cask", "install", self.package_info.name]
+            results = run_command(cmd=cmd, logger=self.logger)
+            if results.success:
+                if self.is_present:
+                    self.logger.info("BrewCaskInstaller.install {0} succeeded".format(self.package_info.name))
+                    return True
                 else:
                     self.logger.warning("BrewCaskInstaller.install {0} failed".format(self.package_info.name))
+                    return False
+            else:
+                self.logger.error("BrewCaskInstaller.install {0} failed status {1) results {2} errors {3}".format(
+                    self.package_info.name, results.status_code, results.results, results.errors))
                 return False
 
     def remove(self):
@@ -57,13 +59,19 @@ class BrewCaskInstaller(BaseInstaller):
             False if package not installed or removal failed.
         """
         if self.is_present():
-            run_command(cmd=["brew", "cask", "uninstall", self.package_info.name])
-            if self.is_present():
-                self.logger.warning("BrewCaskInstaller.remove {0} removal failed".format(self.package_info.name))
-                return False
+            cmd = ["brew", "cask", "uninstall", self.package_info.name]
+            results = run_command(cmd=cmd, logger=self.logger)
+            if results.success:
+                if self.is_present():
+                    self.logger.warning("BrewCaskInstaller.remove {0} removal failed".format(self.package_info.name))
+                    return False
+                else:
+                    self.logger.info("BrewCaskInstaller.remove {0} removal succeeded".format(self.package_info.name))
+                    return True
             else:
-                self.logger.info("BrewCaskInstaller.remove {0} removal succeeded".format(self.package_info.name))
-                return True
+                self.logger.error("BrewCaskInstaller.remove {0} failed status {1) results {2} errors {3}".format(
+                    self.package_info.name, results.status_code, results.results, results.errors))
+                return False
         else:
             self.logger.info("BrewCaskInstaller.remove {0} is not installed".format(self.package_info.name))
             return False
@@ -77,10 +85,13 @@ class BrewCaskInstaller(BaseInstaller):
             True if installed
             False Otherwise
         """
-
-        results, errors, status = run_command(cmd=["brew", "cask", "list"])
-        results = results.split("\n")
-        if self.package_info.name in results:
-            return True
+        cmd = ["brew", "cask", "list"]
+        results = run_command(cmd=cmd, logger=self.logger)
+        if results.success:
+            results = results.results.split("\n")
+            if self.package_info.name in results:
+                return True
+            else:
+                return False
         else:
             return False

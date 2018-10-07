@@ -2,8 +2,6 @@ import sys
 import os
 from os import path
 import glob
-import shutil
-import re
 
 from run_command import run_command
 from .BaseInstaller import BaseInstaller
@@ -41,16 +39,23 @@ class BrewCaskLocalInstaller(BaseInstaller):
 
         """
         if not path.exists(LOCAL_CASK_REPO_DIR):
-            # Switch to appropriate directory
-            start_dir = os.getcwd()
-            os.chdir(STARTUP_DIR)
             # git clone git@github.com:tflynn/private_casks.git
             cmd = ['git', 'clone', LOCAL_CASK_REPO_URL]
-            results, errors, status = run_command(cmd=cmd)
-            os.chdir(start_dir)
-            if int(status) != 0:
-                self.logger.error("BrewCaskLocalInstaller error cloning cask definitions repo results {0} errors {1}".format(
-                                    results, errors))
+            results = run_command(cmd=cmd, working_dir=STARTUP_DIR, logger=self.logger)
+            if not results.success:
+                self.logger.error(("BrewCaskLocalInstaller error cloning cask definitions repo"
+                                    + " status {0} results {1} errors {2}").format(
+                                    results.status_code, results.results, results.errors))
+                sys.exit(1)
+
+        else:
+            # git pull
+            cmd = ['git', 'pull']
+            results = run_command(cmd=cmd, working_dir=LOCAL_CASK_REPO_DIR, logger=self.logger)
+            if not results.success:
+                self.logger.error(("BrewCaskLocalInstaller error updating cask definitions repo"
+                                    + " status {0} results {1} errors {2}").format(
+                                    results.status_code, results.results, results.errors))
                 sys.exit(1)
 
         return
@@ -111,12 +116,12 @@ class BrewCaskLocalInstaller(BaseInstaller):
             full_target_dir = '/private/var/db/receipts'
             # "sudo unzip <zip file name> -d dir"
             cmd = ['sudo', 'unzip', receipts_zip_file, '-d', full_target_dir]
-            results, errors, status = run_command(cmd=cmd)
-            if re.search('error', results, re.IGNORECASE) or errors:
-                if results:
-                    self.logger.info("unzip receipts results {0}".format(results))
-                if errors:
-                    self.logger.info("unzip receipts errors {0}".format(errors))
+            results = run_command(cmd=cmd, logger=self.logger)
+            if not results.success:
+                if results.results:
+                    self.logger.info("unzip receipts results {0}".format(results.results))
+                if results.errors:
+                    self.logger.info("unzip receipts errors {0}".format(results.errors))
                 return False
 
         return True
@@ -146,14 +151,11 @@ class BrewCaskLocalInstaller(BaseInstaller):
             start_dir = os.getcwd()
             os.chdir(local_cask_dir)
             brew_command = "install" if self.package_info.force == "false" else "reinstall"
-            results, errors, status = run_command(cmd=["brew", "cask", brew_command, local_cask_name])
+            cmd = ["brew", "cask", brew_command, local_cask_name]
+            results = run_command(cmd=cmd, logger=self.logger)
             os.chdir(start_dir)
 
-            if re.search('error', results, re.IGNORECASE) or errors:
-                self.logger.error("BrewCaskLocalInstaller.install {0} failed {1} errors {2}".format(
-                    self.package_info.name, results, errors))
-                return False
-            else:
+            if results.success:
                 if self.is_present():
                     status = self.process_receipt_info(app_name)
                     if status:
@@ -162,6 +164,10 @@ class BrewCaskLocalInstaller(BaseInstaller):
                     else:
                         self.logger.error("BrewCaskLocalInstaller.install {0} failed".format(self.package_info.name))
                         return False
+            else:
+                self.logger.error("BrewCaskLocalInstaller.install {0} failed status {1} results {2} errors {3}".format(
+                    self.package_info.name, results.status_code, results.results, results.errors))
+                return False
 
     def remove(self):
         """
@@ -178,17 +184,21 @@ class BrewCaskLocalInstaller(BaseInstaller):
         self.ensure_local_cask_repo_present()
 
         if self.is_present():
-            results, errors, status = run_command(cmd=["brew", "cask", "uninstall", self.package_info.name])
-            if re.search('error', results, re.IGNORECASE) or errors:
-                self.logger.error("BrewCaskLocalInstaller.remove {0} failed {1} errors {2}".format(
-                    self.package_info.name, results, errors))
-                return False
-            if self.is_present():
-                self.logger.warning("BrewCaskLocalInstaller.remove {0} removal failed".format(self.package_info.name))
-                return False
+            cmd = ["brew", "cask", "uninstall", self.package_info.name]
+            results = run_command(cmd=cmd, logger=self.logger)
+            if results.success:
+                if not self.is_present():
+                    self.logger.info("BrewCaskLocalInstaller.remove {0} removal succeeded".format(
+                        self.package_info.name))
+                    return True
+                else:
+                    self.logger.warning("BrewCaskLocalInstaller.remove {0} removal failed".format(
+                        self.package_info.name))
+                    return False
             else:
-                self.logger.info("BrewCaskLocalInstaller.remove {0} removal succeeded".format(self.package_info.name))
-                return True
+                self.logger.error("BrewCaskLocalInstaller.remove {0} failed status {1} results {2} errors {3}".format(
+                    self.package_info.name, results.status_code, results.results, results.errors))
+                return False
         else:
             self.logger.info("BrewCaskLocalInstaller.remove {0} is not installed".format(self.package_info.name))
             return False
