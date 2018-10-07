@@ -23,7 +23,7 @@ PACKAGES_DATA="""
     {"full_name": "1Password 7", "name": "1Password 7", "package_type": "mas", "mas_id": "1333542190", "state" : "present" },
     {"full_name": "Airmail 3 (3.6.41)", "name": "airmail", "package_type": "brewcasklocal", "state" : "present" },
     {"full_name": "FullContact (18.07.3)", "name": "fullcontact", "package_type": "brewcasklocal", "state" : "present" },
-    {"full_name": "Fantastical 2 (2.5.5)", "name": "Fantastical 2", "package_type": "brewcasklocal", "state" : "present" },
+    {"full_name": "Fantastical 2 (2.5.5)", "name": "fantastical", "package_type": "brewcasklocal", "state" : "present" },
     {"full_name": "Simplenote (1.3.7)", "name": "simplenote", "package_type": "brewcasklocal", "state" : "present" },
     {"full_name": "Sublime Text", "name": "sublime-text", "package_type": "brewcask", "state" : "present" },
     {"full_name": "Vox", "name": "vox", "package_type": "brewcask", "state" : "present" },
