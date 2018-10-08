@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(name='macos_installer',
-      version='0.12',
+      version='0.13',
       description='macOS installer for any type of macOS packages',
       url='https://github.com/tflynn/macos_installer.git',
       author='Tracy Flynn',

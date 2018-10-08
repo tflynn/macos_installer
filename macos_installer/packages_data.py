@@ -12,7 +12,8 @@ TEST_PACKAGES_DATA="""
 
 FAILING_PACKAGES_DATA="""
     {"full_name": "HMA Pro VPN", "name": "hma-pro-vpn", "package_type": "brewcask", "state" : "present",
-     "secondary": "open '/usr/local/Caskroom/hma-pro-vpn/3.2.11.2/Install HMA! Pro VPN.app'"}
+     "secondary": "open '/usr/local/Caskroom/hma-pro-vpn/3.2.11.2/Install HMA! Pro VPN.app'"},
+    {"full_name": "Virtualbox (5.2.18)", "name": "virtualbox", "package_type": "brewcask", "state" : "present"}
 """.strip()
 
 PACKAGES_DATA="""
@@ -39,7 +40,6 @@ PACKAGES_DATA="""
     {"full_name": "RubyMine (2018.2.3)", "name": "rubymine", "package_type": "brewcask", "state" : "present"},
     {"full_name": "PyCharm (2018.2.4)", "name": "pycharm", "package_type": "brewcask", "state" : "present"},
     {"full_name": "Vagrant (2.1.5)", "name": "vagrant", "package_type": "brewcask", "state" : "present"},
-    {"full_name": "Virtualbox (5.2.18)", "name": "virtualbox", "package_type": "brewcask", "state" : "present"},
     {"full_name": "dBPowerAmp (16.3.1)", "name": "dbpoweramp", "package_type": "brewcasklocal", "state" : "present" },
     {"full_name": "Picktorial (3.0.6)", "name": "picktorial", "package_type": "brewcasklocal" , "state" : "present" }
 ]
