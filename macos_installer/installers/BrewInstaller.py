@@ -45,7 +45,7 @@ class BrewInstaller(BaseInstaller):
                     self.logger.warning("BrewInstaller.install {0} failed".format(self.package_info.name))
                     return False
             else:
-                self.logger.error("BrewInstaller.install {0} failed status {1} results (2) errors {3}".format(
+                self.logger.error("BrewInstaller.install {0} failed status {1} results {2} errors {3}".format(
                     self.package_info.name, results.status_code, results.results, results.errors))
                 return False
 

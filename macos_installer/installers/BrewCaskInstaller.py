@@ -45,7 +45,7 @@ class BrewCaskInstaller(BaseInstaller):
                     self.logger.warning("BrewCaskInstaller.install {0} failed".format(self.package_info.name))
                     return False
             else:
-                self.logger.error("BrewCaskInstaller.install {0} failed status {1) results {2} errors {3}".format(
+                self.logger.error("BrewCaskInstaller.install {0} failed status {1} results {2} errors {3}".format(
                     self.package_info.name, results.status_code, results.results, results.errors))
                 return False
 
@@ -69,7 +69,7 @@ class BrewCaskInstaller(BaseInstaller):
                     self.logger.info("BrewCaskInstaller.remove {0} removal succeeded".format(self.package_info.name))
                     return True
             else:
-                self.logger.error("BrewCaskInstaller.remove {0} failed status {1) results {2} errors {3}".format(
+                self.logger.error("BrewCaskInstaller.remove {0} failed status {1} results {2} errors {3}".format(
                     self.package_info.name, results.status_code, results.results, results.errors))
                 return False
         else:
